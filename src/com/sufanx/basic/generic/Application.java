@@ -2,6 +2,7 @@ package com.sufanx.basic.generic;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,7 +47,9 @@ public class Application {
      */
     private static void extendsDemo() {
         List<Fruit> fruits = new ArrayList<>();
+        fruits.add(new Fruit());
         List<Apple> apples = new ArrayList<>();
+        apples.add(new Apple());
 
         // 1. 表示可以引用泛型为 Food 或其子类的容器
         // 单独看这里的声明，我们可以推断出其引用的实例的泛型类型为 Fruit 或者是 Fruit 的子类。
@@ -98,6 +101,7 @@ public class Application {
 
     /**
      * 编译时会发生类型擦除，编译器会自动引入一个桥方法（bridge method）
+     *
      * @see MyComparator
      */
     private static void bridge() {
@@ -107,5 +111,8 @@ public class Application {
                 System.out.println(method); // public int com.sufanx.basic.generic.bridge.MyComparator.bridge(java.lang.Object,java.lang.Object)
             }
         }
+        Comparator comparator = new MyComparator();
+        // 在这儿开始Debug,进入方法可以看到看调用堆栈中存在桥方法（多态）
+        comparator.compare(1, 3);
     }
 }
